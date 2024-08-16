@@ -24,6 +24,7 @@
     <Folder Include="Areas\Game\Data\" />
     <Folder Include="Areas\News\Data\" />
     <Folder Include="Areas\Product\Data\" />
+    <Folder Include="Areas\Recruit\Data\" />
     <Folder Include="wwwroot\media\" />
     <Folder Include="wwwroot\media\NewsAndEvents\" />
   </ItemGroup>

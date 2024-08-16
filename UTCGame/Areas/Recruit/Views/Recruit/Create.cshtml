@@ -1,0 +1,41 @@
+﻿@model UTCGame.Areas.Recruit.Models.RecruitModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>RecruitModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RecruitName" class="control-label"></label>
+                <input asp-for="RecruitName" class="form-control" />
+                <span asp-validation-for="RecruitName" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="RegionID" class="control-label"></label>
+                <select asp-for="RegionID" class ="form-control" asp-items="ViewBag.RegionID"></select>
+            </div><br />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div><br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+</div>
+
