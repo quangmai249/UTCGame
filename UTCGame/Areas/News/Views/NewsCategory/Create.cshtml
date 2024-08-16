@@ -1,5 +1,6 @@
-﻿@model UTCGame.Areas.FolderMedia.Models.FolderMediaModel
+﻿@model UTCGame.Areas.News.Models.NewsCategory
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -7,26 +8,22 @@
 
 <h1>Create</h1>
 
-<h4>FolderMedia</h4>
+<h4>NewsCategory</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FolderMediaName" class="control-label"></label>
-                <input asp-for="FolderMediaName" class="form-control" />
-                <span asp-validation-for="FolderMediaName" class="text-danger"></span>
+                <label asp-for="NewsCategoryName" class="control-label"></label>
+                <input asp-for="NewsCategoryName" class="form-control" />
+                <span asp-validation-for="NewsCategoryName" class="text-danger"></span>
             </div><br />
-            <i class="text-danger">@ViewBag.CheckFolderFailed</i>
-            <i class="text-success">@ViewBag.CheckFolder</i>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
                 </label>
             </div><br />
-            <input type="file" name="formFiles" multiple /><br />
-            <i class="text-success">@ViewBag.CheckFile</i><br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

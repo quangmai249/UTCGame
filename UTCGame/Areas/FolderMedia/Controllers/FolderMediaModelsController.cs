@@ -43,10 +43,10 @@ namespace UTCGame.Areas.FolderMedia.Controllers
                         var za = _context.FolderMediaModel.OrderByDescending(x => x.FolderMediaName).ToListAsync();
                         return View(await za);
                     case "active":
-                        var active = _context.FolderMediaModel.OrderBy(x => !x.IsAvtive).ToListAsync();
+                        var active = _context.FolderMediaModel.OrderBy(x => !x.IsActive).ToListAsync();
                         return View(await active);
                     case "!active":
-                        var not_active = _context.FolderMediaModel.OrderBy(x => x.IsAvtive).ToListAsync();
+                        var not_active = _context.FolderMediaModel.OrderBy(x => x.IsActive).ToListAsync();
                         return View(await not_active);
                     default:
                         break;
@@ -128,7 +128,7 @@ namespace UTCGame.Areas.FolderMedia.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(List<IFormFile> formFiles, [Bind("FolderMediaID,FolderMediaName,IsAvtive")] FolderMediaModel folderMediaModel)
+        public async Task<IActionResult> Create(List<IFormFile> formFiles, [Bind("FolderMediaID,FolderMediaName,IsActive")] FolderMediaModel folderMediaModel)
         {
             string path = Path.Combine($"{_webHost.WebRootPath}/media", folderMediaModel.FolderMediaName);
             if (ModelState.IsValid && !Directory.Exists(path))
@@ -181,7 +181,7 @@ namespace UTCGame.Areas.FolderMedia.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string old_path, Guid id, [Bind("FolderMediaID,FolderMediaName,IsAvtive")] FolderMediaModel folderMediaModel)
+        public async Task<IActionResult> Edit(string old_path, Guid id, [Bind("FolderMediaID,FolderMediaName,IsActive")] FolderMediaModel folderMediaModel)
         {
             if (id != folderMediaModel.FolderMediaID)
             {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UTCGame.Data;
 
@@ -11,9 +12,11 @@ using UTCGame.Data;
 namespace UTCGame.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240816172204_NewsCategory")]
+    partial class NewsCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,7 +106,7 @@ namespace UTCGame.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool>("IsAvtive")
                         .HasColumnType("bit");
 
                     b.HasKey("FolderMediaID");
@@ -188,42 +191,6 @@ namespace UTCGame.Migrations
                     b.HasKey("GameTypeID");
 
                     b.ToTable("GameType");
-                });
-
-            modelBuilder.Entity("UTCGame.Areas.News.Models.NewEvent", b =>
-                {
-                    b.Property<Guid>("NewEventID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FolderMediaID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NewEventDateTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewEventDetail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewEventTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("NewsCategoryID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("NewEventID");
-
-                    b.HasIndex("FolderMediaID");
-
-                    b.HasIndex("NewsCategoryID");
-
-                    b.ToTable("NewEvent");
                 });
 
             modelBuilder.Entity("UTCGame.Areas.News.Models.NewsCategory", b =>
@@ -335,25 +302,6 @@ namespace UTCGame.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("FolderMedia");
-                });
-
-            modelBuilder.Entity("UTCGame.Areas.News.Models.NewEvent", b =>
-                {
-                    b.HasOne("UTCGame.Areas.FolderMedia.Models.FolderMediaModel", "FolderMediaModel")
-                        .WithMany()
-                        .HasForeignKey("FolderMediaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UTCGame.Areas.News.Models.NewsCategory", "NewsCategory")
-                        .WithMany()
-                        .HasForeignKey("NewsCategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FolderMediaModel");
-
-                    b.Navigation("NewsCategory");
                 });
 
             modelBuilder.Entity("UTCGame.Areas.Product.Models.ProductModel", b =>

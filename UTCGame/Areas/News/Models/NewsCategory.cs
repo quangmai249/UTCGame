@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace UTCGame.Areas.FolderMedia.Models
+namespace UTCGame.Areas.News.Models
 {
-    public class FolderMediaModel
+    public class NewsCategory
     {
         [Key]
-        public Guid FolderMediaID { get; set; }
+        public Guid NewsCategoryID { get; set; }
         [Required]
         [BindProperty]
-        public required string FolderMediaName { get; set; }
+        public required string NewsCategoryName { get; set; }
         public bool IsActive { get; set; }
     }
 }

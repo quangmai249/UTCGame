@@ -1,0 +1,58 @@
+﻿@model UTCGame.Areas.News.Models.NewEvent
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>NewEvent</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NewEventID" />
+            <div class="form-group">
+                <label asp-for="NewEventTitle" class="control-label"></label>
+                <input asp-for="NewEventTitle" class="form-control" />
+                <span asp-validation-for="NewEventTitle" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="NewEventDetail" class="control-label"></label>
+                <input asp-for="NewEventDetail" class="form-control" />
+                <span asp-validation-for="NewEventDetail" class="text-danger"></span>
+            </div><br />
+            <div class="form-group" hidden>
+                <label asp-for="NewEventDateTime" class="control-label"></label>
+                <input asp-for="NewEventDateTime" class="form-control" value="@DateTime.UtcNow" />
+                <span asp-validation-for="NewEventDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewsCategoryID" class="control-label"></label>
+                <select asp-for="NewsCategoryID" class="form-control" asp-items="ViewBag.NewsCategoryID"></select>
+                <span asp-validation-for="NewsCategoryID" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="FolderMediaID" class="control-label"></label>
+                <select asp-for="FolderMediaID" class="form-control" asp-items="ViewBag.FolderMediaID"></select>
+                <span asp-validation-for="FolderMediaID" class="text-danger"></span>
+            </div><br />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div><br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+<div>
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+</div>
