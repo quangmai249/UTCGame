@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UTCGame.Data;
 
@@ -11,9 +12,11 @@ using UTCGame.Data;
 namespace UTCGame.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240816155420_Product Type Model")]
+    partial class ProductTypeModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,43 +193,6 @@ namespace UTCGame.Migrations
                     b.ToTable("GameType");
                 });
 
-            modelBuilder.Entity("UTCGame.Areas.Product.Models.ProductModel", b =>
-                {
-                    b.Property<Guid>("ProductID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GameID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsProductActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("ProductPrice")
-                        .HasColumnType("real");
-
-                    b.Property<int>("ProductQuantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ProductReleaseDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProductTypeID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProductID");
-
-                    b.HasIndex("GameID");
-
-                    b.HasIndex("ProductTypeID");
-
-                    b.ToTable("ProductModel");
-                });
-
             modelBuilder.Entity("UTCGame.Areas.Product.Models.ProductType", b =>
                 {
                     b.Property<Guid>("ProductTypeID")
@@ -281,25 +247,6 @@ namespace UTCGame.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("FolderMedia");
-                });
-
-            modelBuilder.Entity("UTCGame.Areas.Product.Models.ProductModel", b =>
-                {
-                    b.HasOne("UTCGame.Areas.Game.Models.GameModel", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UTCGame.Areas.Product.Models.ProductType", "ProductType")
-                        .WithMany()
-                        .HasForeignKey("ProductTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("ProductType");
                 });
 #pragma warning restore 612, 618
         }

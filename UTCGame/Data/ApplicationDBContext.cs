@@ -2,6 +2,7 @@
 using UTCGame.Areas.Employee.Models;
 using UTCGame.Areas.FolderMedia.Models;
 using UTCGame.Areas.Game.Models;
+using UTCGame.Areas.Product.Models;
 
 namespace UTCGame.Data
 {
@@ -15,5 +16,7 @@ namespace UTCGame.Data
         public DbSet<GameType> GameType { get; set; }
         public DbSet<GamePlatform> GamePlatform { get; set; }
         public DbSet<GameModel> Game { get; set; }
+        public DbSet<ProductType> ProductType { get; set; }
+        public DbSet<ProductModel> ProductModel { get; set; }
     }
 }

@@ -1,0 +1,64 @@
+﻿@model UTCGame.Areas.Product.Models.ProductModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProductID" />
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="ProductPrice" class="control-label"></label>
+                <input asp-for="ProductPrice" class="form-control" />
+                <span asp-validation-for="ProductPrice" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="ProductQuantity" class="control-label"></label>
+                <input asp-for="ProductQuantity" class="form-control" />
+                <span asp-validation-for="ProductQuantity" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="ProductReleaseDate" class="control-label"></label>
+                <input asp-for="ProductReleaseDate" class="form-control" />
+                <span asp-validation-for="ProductReleaseDate" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="ProductTypeID" class="control-label"></label>
+                <select asp-for="ProductTypeID" class="form-control" asp-items="ViewBag.ProductTypeID"></select>
+                <span asp-validation-for="ProductTypeID" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="GameID" class="control-label"></label>
+                <select asp-for="GameID" class="form-control" asp-items="ViewBag.GameID"></select>
+                <span asp-validation-for="GameID" class="text-danger"></span>
+            </div><br />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsProductActive" /> @Html.DisplayNameFor(model => model.IsProductActive)
+                </label>
+            </div><br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+</div>
+
+
