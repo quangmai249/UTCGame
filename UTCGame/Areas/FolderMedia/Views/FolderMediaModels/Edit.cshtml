@@ -1,0 +1,100 @@
+﻿@model UTCGame.Areas.FolderMedia.Models.FolderMediaModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    string path = Model.FolderMediaName;
+}
+
+<h1>Edit</h1>
+
+<h4>FolderMedia</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FolderMediaID" />
+            <div class="form-group">
+                <label asp-for="FolderMediaName" class="control-label"></label>
+                <input hidden name="old_path" value="@Model.FolderMediaName" />
+                <input asp-for="FolderMediaName" class="form-control" />
+                <span asp-validation-for="FolderMediaName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsAvtive" /> @Html.DisplayNameFor(model => model.IsAvtive)
+                </label>
+            </div>
+            <div class="form-group">
+                @ViewBag.Checker
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" /> |
+                <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-4 border">
+        @foreach (var item in Directory.GetFiles($"wwwroot/media/{path}"))
+        {
+            @if (item.Contains(".png") || item.Contains(".jpg"))
+            {
+                <form method="get">
+                    <div class="w3-container w3-center">
+                        <input name="path" value="@item" hidden />
+                        <img style="width:200px;padding:10px;cursor:pointer;" onclick="onClick(this)" src="~/@item.Replace("wwwroot/","")" />
+
+                        <div class="w3-section">
+                            <i>@item.Replace($"wwwroot/media/{path}\\", "")</i><br />
+                            <input type="submit" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger" value="Delete">
+                        </div>
+                    </div>
+                </form>
+                <hr />
+            }
+        }
+    </div>
+    <div class="col-md-4 border">
+        @foreach (var item in Directory.GetFiles($"wwwroot/media/{path}", "*.mp4"))
+        {
+            <form method="get">
+                <div class="w3-container w3-center">
+                    <input name="path" value="@item" hidden />
+                    <video width="320" height="240" controls>
+                        <source src="~/@item.Replace("wwwroot/","")" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+
+                    <div class="w3-section">
+                        <i>@item.Replace($"wwwroot/media/{path}\\", "")</i><br />
+                        <input type="submit" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger" value="Delete">
+                    </div>
+                </div>
+            </form>
+            <hr />
+        }
+    </div>
+    <div class="col-md-4 border">
+        @foreach (var item in Directory.GetFiles($"wwwroot/media/{path}"))
+        {
+            @if (!item.Contains(".mp4") & !item.Contains("jpg") & !item.Contains(".png"))
+            {
+                <form method="get">
+                    <div class="w3-container w3-center">
+                        <input name="path" value="@item" hidden />
+
+                        <div class="w3-section">
+                            <i>@item.Replace($"wwwroot/media/{path}\\", "")</i>
+                            <input type="submit" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger" value="Delete">
+                        </div>
+                    </div>
+                </form>
+                <hr />
+            }
+        }
+    </div>
+</div>

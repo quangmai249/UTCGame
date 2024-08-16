@@ -1,0 +1,170 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>UTCGame -Admin</title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/previews/010/308/394/non_2x/ninja-logo-ninja-kids-game-logo-free-vector.jpg">
+    <link href="~/Bootstrap/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown > .dropdown-toggle:active {
+        pointer-events: none;
+    }
+
+    .row {
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .form {
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+</style>
+<body class="sb-nav-fixed">
+    <!-- Begin Top nav -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3">Admin</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fa fa-bars"></i></button>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        </ul>
+    </nav>
+    <!-- End Top nav -->
+    <div id="layoutSidenav">
+        <!-- Begin Left menu -->
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-line-chart"></i></div>
+                            Dashboard
+                        </a><hr />
+                        <a class="nav-link" asp-area="Employee" asp-controller="EmployeeModels" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-user"></i></div>
+                            Employees
+                        </a>
+                        <a class="nav-link" asp-area="Employee" asp-controller="Role" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-tasks"></i></div>
+                            Roles
+                        </a>
+                        <a class="nav-link" asp-area="Employee" asp-controller="Region" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-map-marker"></i></div>
+                            Regions
+                        </a><hr />
+                        <a class="nav-link" asp-area="FolderMedia" asp-controller="FolderMediaModels" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-folder-open"></i></div>
+                            Media
+                        </a><hr />
+                        <a class="nav-link" asp-area="Admin" asp-controller="Game" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-gamepad"></i></div>
+                            Games
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="GamePlatform" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-tasks"></i></div>
+                            Game Platforms
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="GameType" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-tasks"></i></div>
+                            Game Types
+                        </a><hr />
+                        <a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-puzzle-piece"></i></div>
+                            Products
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="ProductType" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-tasks"></i></div>
+                            Product Types
+                        </a><hr />
+                        <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-shopping-cart"></i></div>
+                            Orders
+                        </a><hr />
+                        <a class="nav-link" asp-area="Admin" asp-controller="Recruit" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-newspaper-o"></i></div>
+                            Recruits
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="RecruitsCategory" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-tasks"></i></div>
+                            Recruits Category
+                        </a><hr />
+                        <a class="nav-link" asp-area="Admin" asp-controller="NewEvent" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-gift"></i></div>
+                            News and Events
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="NewsCategory" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-tasks"></i></div>
+                            News Category
+                        </a><hr />
+                        <a class="nav-link" asp-area="Admin" asp-controller="FAQ" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-comment"></i></div>
+                            FAQ
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="FAQ" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa fa-commenting"></i></div>
+                            Contact
+                        </a><hr />
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <a class="small" onclick="return confirm('Are you sure?')" asp-area="default" asp-controller="Home" asp-action="Index">
+                        Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <!-- End Left menu -->
+        <!-- Begin Right content -->
+        <div id="layoutSidenav_content">
+            <!-- Begin Main -->
+            <main>
+                <div class="container-fluid px-4">
+                    <br />
+                    @RenderBody()
+                </div>
+            </main>
+            <!-- End Main -->
+            <!-- Begin Footer -->
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">&copy; 2024 - @DateTime.Now.Year - UTCGame</div>
+                    </div>
+                </div>
+            </footer>
+            <!-- End Footer -->
+        </div>
+        <!-- End Right content -->
+    </div>
+    <script src="~/Bootstrap/js/scripts.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+    <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+    <div class="w3-modal-content w3-animate-zoom">
+        <img class="w-100" id="img01">
+    </div>
+</div>
+
+<script>
+    function onClick(element) {
+        document.getElementById("img01").src = element.src;
+        document.getElementById("modal01").style.display = "block";
+    }
+</script>

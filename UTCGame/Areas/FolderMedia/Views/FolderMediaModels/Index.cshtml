@@ -1,0 +1,77 @@
+﻿@model IEnumerable<UTCGame.Areas.FolderMedia.Models.FolderMediaModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
+        </p>
+    </div>
+    <div class="col-md-2">
+        <form method="get">
+            <input type="text" placeholder="Name..." name="_search" />
+            <input class="btn btn-outline-primary" type="submit" hidden />
+        </form>
+    </div>
+    <div class="col-md-1">
+        <form method="get">
+            <select name="_sort" onchange="this.form.submit()">
+                <option>Filter</option>
+                <option value="az">Title (A-Z)</option>
+                <option value="za">Title (Z-A)</option>
+                <option value="active">Active</option>
+                <option value="!active">Not Active</option>
+            </select>
+        </form>
+    </div>
+</div>
+<br />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FolderMediaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAvtive)
+            </th>
+            <th>AddFile</th>
+            <th>Actions</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FolderMediaID">
+                        @Html.DisplayFor(modelItem => item.FolderMediaName)
+                    </a>
+                    <br />
+                    <i>
+                        ( @Directory.GetFiles("wwwroot/media/" + item.FolderMediaName).Length files )
+                    </i>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAvtive)
+                </td>
+                <td>
+                    <form method="post" enctype="multipart/form-data">
+                        <input name="folder" value="@item.FolderMediaName" hidden />
+                        <input name="formFiles" type="file" multiple />
+                        <input type="submit" value="Submit" class="btn btn-outline-success" />
+                    </form>
+                </td>
+                <td>
+                    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.FolderMediaID">Edit</a> |
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.FolderMediaID" hidden>Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.FolderMediaID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
