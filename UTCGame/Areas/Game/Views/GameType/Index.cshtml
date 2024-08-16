@@ -1,0 +1,65 @@
+﻿@model IEnumerable<UTCGame.Areas.Game.Models.GameType>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
+        </p>
+    </div>
+    <div class="col-md-2">
+        <form method="get">
+            <input type="text" placeholder="Name..." name="_search" />
+            <input class="btn btn-outline-primary" type="submit" hidden />
+        </form>
+    </div>
+    <div class="col-md-1">
+        <form method="get">
+            <select name="_sort" onchange="this.form.submit()">
+                <option>Filter</option>
+                <option value="az">Title (A-Z)</option>
+                <option value="za">Title (Z-A)</option>
+                <option value="active">Active</option>
+                <option value="!active">Not Active</option>
+            </select>
+        </form>
+    </div>
+</div>
+<br />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GameTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>Actions</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GameTypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.GameTypeID">Edit</a> |
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.GameTypeID">Details</a> |
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.GameTypeID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

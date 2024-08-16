@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UTCGame.Areas.Employee.Models;
 using UTCGame.Areas.FolderMedia.Models;
+using UTCGame.Areas.Game.Models;
 
 namespace UTCGame.Data
 {
@@ -10,7 +11,9 @@ namespace UTCGame.Data
         public DbSet<FolderMediaModel> FolderMediaModel { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Region> Region { get; set; }
-        public DbSet<UTCGame.Areas.Employee.Models.EmployeeModel> EmployeeModel { get; set; } = default!;
-        //public DbSet<EmployeeModel> Employee { get; set; }
+        public DbSet<EmployeeModel> EmployeeModel { get; set; }
+        public DbSet<GameType> GameType { get; set; }
+        public DbSet<GamePlatform> GamePlatform { get; set; }
+        public DbSet<GameModel> Game { get; set; }
     }
 }

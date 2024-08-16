@@ -1,0 +1,68 @@
+﻿@model UTCGame.Areas.Game.Models.GameModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Game</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GameName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GamePrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GamePrice)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GameType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GamePlatform)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GamePlatform)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameReleaseDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GameReleaseDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Employee.EmployeeEmail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FolderMedia)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FolderMedia.FolderMediaName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsGameActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsGameActive)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model?.GameID">Edit</a> |
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+</div>

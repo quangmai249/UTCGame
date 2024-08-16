@@ -21,6 +21,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Employee\Data\" />
     <Folder Include="Areas\FolderMedia\Data\" />
+    <Folder Include="Areas\Game\Data\" />
     <Folder Include="wwwroot\media\" />
   </ItemGroup>
 
