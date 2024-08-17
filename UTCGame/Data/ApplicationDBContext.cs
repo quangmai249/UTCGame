@@ -5,6 +5,7 @@ using UTCGame.Areas.Game.Models;
 using UTCGame.Areas.News.Models;
 using UTCGame.Areas.Product.Models;
 using UTCGame.Areas.Recruit.Models;
+using UTCGame.Areas.Support.Models;
 
 namespace UTCGame.Data
 {
@@ -23,5 +24,6 @@ namespace UTCGame.Data
         public DbSet<NewsCategory> NewsCategory { get; set; }
         public DbSet<NewEvent> NewEvent { get; set; }
         public DbSet<RecruitModel> RecruitModel { get; set; }
+        public DbSet<FAQ> FAQ { get; set; }
     }
 }

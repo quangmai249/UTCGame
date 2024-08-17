@@ -1,4 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,7 +108,7 @@
                             <div class="sb-nav-link-icon"><i class="fa fa-tasks"></i></div>
                             News Category
                         </a><hr />
-                        <a class="nav-link" asp-area="Admin" asp-controller="FAQ" asp-action="Index">
+                        <a class="nav-link" asp-area="Support" asp-controller="FAQ" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fa fa-comment"></i></div>
                             FAQ
                         </a>
@@ -118,7 +119,7 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <a class="small" onclick="return confirm('Are you sure?')" asp-area="default" asp-controller="Home" asp-action="Index">
+                    <a class="small text-light" onclick="return confirm('Are you sure?')" asp-area="default" asp-controller="Home" asp-action="Index">
                         Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
                     </a>
                 </div>
