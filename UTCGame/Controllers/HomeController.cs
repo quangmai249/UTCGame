@@ -22,6 +22,24 @@ namespace UTCGame.Controllers
             return View();
         }
 
+        public IActionResult NewsEvents(string? news_category)
+        {
+            var news = _context.NewEvent.Where(x => x.IsActive).ToList();
+
+            var category = _context.NewsCategory.Where(x => x.IsActive).ToList();
+            if (category != null)
+                ViewBag.NewsCategory = category;
+            if (news_category != null && news != null)
+            {
+                var ls = news.Where(x => x.NewsCategoryID.Equals(Guid.Parse(news_category))).ToList();
+                return View(ls);
+            }
+            else
+            {
+                return View(news);
+            }
+        }
+
         public IActionResult Privacy()
         {
             var media = _context.FolderMediaModel.Where(x => x.IsActive && x.FolderMediaID.Equals(Guid.Parse("368BF5FE-F405-45C3-9EE0-809C0E7A0526")));

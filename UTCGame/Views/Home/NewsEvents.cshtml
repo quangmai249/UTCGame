@@ -1,0 +1,41 @@
+﻿@model IEnumerable<UTCGame.Areas.News.Models.NewEvent>
+@{
+    ViewData["Title"] = "NewsEvents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a:hover{
+        text-decoration:none;
+    }
+</style>
+
+<div class="container">
+    <h2>Support</h2>
+    <form method="get">
+        @foreach (var item in ViewBag.NewsCategory)
+        {
+            <button type="submit" class="btn btn-primary" name="news_category" value="@item.NewsCategoryID">
+                @item.NewsCategoryName
+            </button>
+        }
+    </form>
+    <hr />
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            string path_pdf = $"media/News And Events/{@item.NewEventTitle}.pdf";
+            string path_img = $"media/News And Events/{@item.NewEventTitle}.png";
+            <div class="card-img row shadow">
+                <a href="~/@path_pdf">
+                    <img class="w-25 col-md-4" src="~/@path_img" />
+                    <h4>@item.NewEventTitle</h4>
+                    <p class="text-dark">@item.NewEventDetail</p>
+                    <p class="text-dark">@item.NewEventDateTime</p>
+                </a>
+            </div>
+            <br />
+        }
+    }
+</div>
