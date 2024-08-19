@@ -95,8 +95,15 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <a class="small text-light" onclick="return confirm('Are you sure?')" asp-area="default" asp-controller="Home" asp-action="Index">
-                        Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <a class="small text-light" onclick="return confirm('Are you sure?')" asp-area="" asp-controller="Login" asp-action="Logout">
+                        Logout 
+                        
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            @User.Identity.Name
+                        }
+
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
                     </a>
                 </div>
             </nav>

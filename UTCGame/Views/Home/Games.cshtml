@@ -9,41 +9,48 @@
     <hr />
     @if (Model != null)
     {
-        @foreach (var item in Model)
-        {
-            string _price = item.GamePrice == 0 ? "Free" : $"{item.GamePrice.ToString()}$";
-
-            <div class="card w-100 shadow">
-                <div class="card-body">
-                    <div class="flex-fill">
-                        @foreach (var i in Directory.GetFiles($"wwwroot/media/{item.GameName}"))
-                        {
-                            @if (i.Contains(".mp4"))
-                            {
-                                <video class="card-img w-50 p-2" controls>
-                                    <source src="~/@i.Replace("wwwroot/","")" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            }
-                        }<br />
-                        @foreach (var i in Directory.GetFiles($"wwwroot/media/{item.GameName}"))
-                        {
-                            @if (i.Contains(".png"))
-                            {
-                                <img class="card-img w-25 h-25 p-2" onclick="onClick(this)" src="~/@i.Replace("wwwroot/","")" />
-                            }
-                        }
+        <div class="d-flex flex-wrap">
+            @foreach (var item in Model)
+            {
+                string _price = item.GamePrice == 0 ? "Free" : $"{item.GamePrice.ToString()}$";
+                <div class="card m-5 shadow" style="width: 30rem;">
+                    <div class="card-header">
+                        <b>@item.GameName</b>
                     </div>
-                    <h3 class="card-title"><b>@item.GameName</b></h3>
-                    <h5>@_price</h5>
-                    <h5>Type: @item.GameType</h5>
-                    <h5>Play on: @item.GamePlatform</h5>
-                    <h5>Release Date: @item.GameReleaseDate</h5>
-                    <p class="btn btn-success">Game avaiable now on Stores</p>
+                    <div class="card-body">
+                        <div class="flex-fill">
+                            @foreach (var i in Directory.GetFiles($"wwwroot/media/{item.GameName}"))
+                            {
+                                @if (i.Contains(".mp4"))
+                                {
+                                    <video class="card-img w-50 p-2" controls>
+                                        <source src="~/@i.Replace("wwwroot/","")" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                }
+                            }<br />
+                            @foreach (var i in Directory.GetFiles($"wwwroot/media/{item.GameName}"))
+                            {
+                                @if (i.Contains(".png"))
+                                {
+                                    <img class="card-img w-25 h-25 p-2" onclick="onClick(this)" src="~/@i.Replace("wwwroot/","")" />
+                                }
+                            }
+                        </div>
+                        <div class="card-footer">
+                            <h5>@_price</h5>
+                            <h5>Type: @item.GameType</h5>
+                            <h5>Play on: @item.GamePlatform</h5>
+                            <h5>Release Date: @item.GameReleaseDate</h5>
+                        </div>
+                        <div class="card-footer">
+                            <p class="btn btn-success">Game avaiable now on Stores</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <br />
-        }
+                <br />
+            }
+        </div>
     }
 </div>
 

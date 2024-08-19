@@ -7,33 +7,56 @@
 
 <div class="container" style="margin-bottom:200px">
     <h2>Our Products</h2>
+    <form method="get">
+        @foreach (var item in ViewBag.ProductTypes)
+        {
+            <button type="submit" class="btn btn-primary" name="_types" value="@item.ProductTypeID">
+                @item.ProductTypeName
+            </button>
+        }
+    </form>
     <hr />
     @if (Model != null)
     {
-        @foreach (var item in Model)
-        {
-            string _price = item.ProductPrice == 0 ? "Free" : $"{item.ProductPrice.ToString()}$";
-
-            <div class="card w-100 shadow">
-                <div class="card-body">
-                    <div class="flex-fill">
+        <div class="d-flex flex-wrap">
+            @foreach (var item in Model)
+            {
+                string _price = item.ProductPrice == 0 ? "Free" : $"{item.ProductPrice.ToString()}$";
+                <div class="card m-4 shadow" style="width: 20rem;">
+                    <div class="card-header">
+                        <h3 class="card-title"><b>@item.ProductName</b></h3>
+                    </div>
+                    <div class="card-body">
                         @foreach (var i in Directory.GetFiles($"wwwroot/media/{item.ProductName}"))
                         {
                             @if (i.Contains(".png") || i.Contains(".jpg"))
                             {
-                                <img class="card-img w-25 h-25 p-2" onclick="onClick(this)" src="~/@i.Replace("wwwroot/","")" />
+                                <img class="card-img w-25 p-2" onclick="onClick(this)" src="~/@i.Replace("wwwroot/","")" />
                             }
                         }
                     </div>
-                    <h3 class="card-title"><b>@item.ProductName</b></h3>
-                    <h5>@_price</h5>
-                    <h5>Quantity Left: @item.ProductQuantity</h5>
-                    <h5>Release Date: @item.ProductReleaseDate</h5>
-                    <p class="btn btn-success">Game avaiable now on Stores</p>
+                    <div class="card-footer">
+                        <h5>@_price</h5>
+                        <h5>Release Date: @item.ProductReleaseDate.ToShortDateString()</h5>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://www.amazon.com/">Reconmmend order: amazon.com</a>
+                        @if (item.ProductQuantity > 0)
+                        {
+                            <button class="btn btn-success">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                Add to Cart
+                            </button>
+                        }
+                        else
+                        {
+                            <input class="btn btn-danger" value="Out of stock" readonly />
+                        }
+                    </div>
                 </div>
-            </div>
-            <br />
-        }
+                <br />
+            }
+        </div>
     }
 </div>
 
