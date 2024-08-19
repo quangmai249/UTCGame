@@ -23,19 +23,19 @@
                             {
                                 @if (i.Contains(".mp4"))
                                 {
-                                    <video class="card-img w-50 p-2" controls>
+                                    <video class="card-img w-100 p-2" controls>
                                         <source src="~/@i.Replace("wwwroot/","")" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                 }
-                            }<br />
+                            }
                             @foreach (var i in Directory.GetFiles($"wwwroot/media/{item.GameName}"))
                             {
                                 @if (i.Contains(".png"))
                                 {
                                     <img class="card-img w-25 h-25 p-2" onclick="onClick(this)" src="~/@i.Replace("wwwroot/","")" />
                                 }
-                            }
+                            }<br />
                         </div>
                         <div class="card-footer">
                             <h5>@_price</h5>

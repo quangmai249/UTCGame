@@ -6,7 +6,10 @@
 }
 
 <div class="container" style="margin-bottom:200px">
-    <h2>Our Products</h2>
+    <h2>
+        Our Products
+        <i class="fa fa-shopping-cart text-danger" style="font-size:24px;" aria-hidden="true" hidden> 0</i>
+    </h2>
     <form method="get">
         @foreach (var item in ViewBag.ProductTypes)
         {
@@ -40,12 +43,11 @@
                         <h5>Release Date: @item.ProductReleaseDate.ToShortDateString()</h5>
                     </div>
                     <div class="card-footer">
-                        <a href="https://www.amazon.com/">Reconmmend order: amazon.com</a>
                         @if (item.ProductQuantity > 0)
                         {
                             <button class="btn btn-success">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                Add to Cart
+                                <a href="https://www.amazon.com/">Order now on: amazon.com</a>
                             </button>
                         }
                         else

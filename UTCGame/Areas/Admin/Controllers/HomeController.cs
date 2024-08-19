@@ -5,18 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace UTCGame.Areas.Admin.Controllers
 {
-	[Area("Admin")]
-	public class HomeController : Controller
-	{
-		public IActionResult Index()
-		{
-			return View();
-		}
+    [Area("Admin")]
+    [Authorize]
+    public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-		public async Task<IActionResult> Logout()
-		{
-			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-			return RedirectToAction("Index", "Home");
-		}
-	}
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+    }
 }
