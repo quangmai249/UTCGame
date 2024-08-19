@@ -1,0 +1,52 @@
+﻿@model IEnumerable<UTCGame.Areas.Product.Models.ProductModel>
+
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-bottom:200px">
+    <h2>Our Products</h2>
+    <hr />
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            string _price = item.ProductPrice == 0 ? "Free" : $"{item.ProductPrice.ToString()}$";
+
+            <div class="card w-100 shadow">
+                <div class="card-body">
+                    <div class="flex-fill">
+                        @foreach (var i in Directory.GetFiles($"wwwroot/media/{item.ProductName}"))
+                        {
+                            @if (i.Contains(".png") || i.Contains(".jpg"))
+                            {
+                                <img class="card-img w-25 h-25 p-2" onclick="onClick(this)" src="~/@i.Replace("wwwroot/","")" />
+                            }
+                        }
+                    </div>
+                    <h3 class="card-title"><b>@item.ProductName</b></h3>
+                    <h5>@_price</h5>
+                    <h5>Quantity Left: @item.ProductQuantity</h5>
+                    <h5>Release Date: @item.ProductReleaseDate</h5>
+                    <p class="btn btn-success">Game avaiable now on Stores</p>
+                </div>
+            </div>
+            <br />
+        }
+    }
+</div>
+
+<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+    <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+    <div class="w3-modal-content w3-animate-zoom">
+        <img class="w-100" id="img01">
+    </div>
+</div>
+
+<script>
+    function onClick(element) {
+        document.getElementById("img01").src = element.src;
+        document.getElementById("modal01").style.display = "block";
+    }
+</script>

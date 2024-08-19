@@ -22,6 +22,18 @@ namespace UTCGame.Controllers
             return View();
         }
 
+        public IActionResult Games()
+        {
+            var games = _context.Game.Where(x => x.IsGameActive).ToList();
+            return View(games);
+        }
+
+        public IActionResult Products()
+        {
+            var products = _context.ProductModel.Where(x => x.IsProductActive).ToList();
+            return View(products);
+        }
+
         public IActionResult NewsEvents(string? news_category)
         {
             var category = _context.NewsCategory.Where(x => x.IsActive).ToList();
