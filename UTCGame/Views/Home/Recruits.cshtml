@@ -1,0 +1,38 @@
+﻿@model IEnumerable<UTCGame.Areas.Recruit.Models.RecruitModel>
+@{
+    ViewData["Title"] = "Recruits";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a:hover {
+        text-decoration: none;
+    }
+</style>
+
+<div class="container">
+    <h2>Recruits</h2>
+    <form method="get">
+        @foreach (var item in ViewBag.Regions)
+        {
+            <button type="submit" class="btn btn-primary" name="_region" value="@item.RegionID">
+                @item.RegionName
+            </button>
+        }
+    </form>
+    <hr />
+    <h3>We are hiring new Employees for : </h3><br />
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <div class="card-img shadow p-3">
+                <h4>@item.RecruitName in @item.Region.RegionName</h4>
+                <i>Please contact to us in : <a href="">humanresources@gmail.com</a></i>
+            </div>
+            <br />
+        }
+    }
+</div>
+
+

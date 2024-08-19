@@ -24,11 +24,12 @@ namespace UTCGame.Controllers
 
         public IActionResult NewsEvents(string? news_category)
         {
-            var news = _context.NewEvent.Where(x => x.IsActive).ToList();
-
             var category = _context.NewsCategory.Where(x => x.IsActive).ToList();
-            if (category != null)
-                ViewBag.NewsCategory = category;
+            ViewBag.NewsCategory = category;
+
+            var news = _context.NewEvent.Where(x => x.IsActive).ToList();
+            var employee = _context.EmployeeModel.Where(x => x.IsEmployeeActive).ToList();
+
             if (news_category != null && news != null)
             {
                 var ls = news.Where(x => x.NewsCategoryID.Equals(Guid.Parse(news_category))).ToList();
@@ -37,6 +38,23 @@ namespace UTCGame.Controllers
             else
             {
                 return View(news);
+            }
+        }
+
+        public IActionResult Recruits(string? _region)
+        {
+            var region = _context.Region.Where(x => x.IsRegionActive).ToList();
+            ViewBag.Regions = region;
+
+            var recruits = _context.RecruitModel.Where(x => x.IsActive).ToList();
+            if (_region != null && recruits != null)
+            {
+                var ls = recruits.Where(x => x.RegionID.Equals(Guid.Parse(_region))).ToList();
+                return View(ls);
+            }
+            else
+            {
+                return View(recruits);
             }
         }
 
