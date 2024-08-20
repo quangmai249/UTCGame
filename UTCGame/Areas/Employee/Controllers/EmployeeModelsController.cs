@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UTCGame.Areas.Employee.Models;
 using UTCGame.Data;
+using X.PagedList;
 
 namespace UTCGame.Areas.Employee.Controllers
 {
@@ -24,36 +27,38 @@ namespace UTCGame.Areas.Employee.Controllers
         }
 
         // GET: Employee/EmployeeModels
-        public async Task<IActionResult> Index(string _search, string _sort)
+        public async Task<IActionResult> Index(string _search, string _sort, int page = 1)
         {
 
+            page = page < 1 ? 1 : page;
+            int pageSize = 10;
             if (!_search.IsNullOrEmpty())
             {
-                var ls = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).Where(x => x.EmployeeEmail.Contains(_search)).ToListAsync();
-                return View(await ls);
+                var ls = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).Where(x => x.EmployeeEmail.Contains(_search)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_sort.IsNullOrEmpty())
             {
                 switch (_sort)
                 {
                     case "az":
-                        var az = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).OrderBy(x => x.EmployeeEmail).ToListAsync();
-                        return View(await az);
+                        var az = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).OrderBy(x => x.EmployeeEmail).ToPagedList(page, pageSize);
+                        return View(az);
                     case "za":
-                        var za = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).OrderByDescending(x => x.EmployeeEmail).ToListAsync();
-                        return View(await za);
+                        var za = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).OrderByDescending(x => x.EmployeeEmail).ToPagedList(page, pageSize);
+                        return View(za);
                     case "active":
-                        var active = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).OrderBy(x => !x.IsEmployeeActive).ToListAsync();
-                        return View(await active);
+                        var active = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).OrderBy(x => !x.IsEmployeeActive).ToPagedList(page, pageSize);
+                        return View(active);
                     case "!active":
-                        var not_active = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).OrderBy(x => x.IsEmployeeActive).ToListAsync();
-                        return View(await not_active);
+                        var not_active = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role).OrderBy(x => x.IsEmployeeActive).ToPagedList(page, pageSize);
+                        return View(not_active);
                     default:
                         break;
                 }
             }
             var applicationDBContext = _context.EmployeeModel.Include(e => e.Region).Include(e => e.Role);
-            return View(await applicationDBContext.ToListAsync());
+            return View(applicationDBContext.ToPagedList(page, pageSize));
         }
 
         // GET: Employee/EmployeeModels/Details/5

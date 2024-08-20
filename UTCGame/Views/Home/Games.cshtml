@@ -1,4 +1,7 @@
-﻿@model IEnumerable<UTCGame.Areas.Game.Models.GameModel>
+﻿@model X.PagedList.IPagedList<UTCGame.Areas.Game.Models.GameModel>
+@using X.PagedList
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Games";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,7 +16,7 @@
             @foreach (var item in Model)
             {
                 string _price = item.GamePrice == 0 ? "Free" : $"{item.GamePrice.ToString()}$";
-                <div class="card m-5 shadow" style="width: 30rem;">
+                <div class="card m-3 shadow" style="width: 30rem;">
                     <div class="card-header">
                         <b>@item.GameName</b>
                     </div>
@@ -51,9 +54,9 @@
                 <br />
             }
         </div>
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Games", "Home", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
     }
 </div>
-
 <div id="modal01" class="w3-modal" onclick="this.style.display='none'">
     <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
     <div class="w3-modal-content w3-animate-zoom">

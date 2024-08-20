@@ -1,6 +1,8 @@
-﻿@model IEnumerable<UTCGame.Areas.Employee.Models.EmployeeModel>
+﻿@model X.PagedList.IPagedList<UTCGame.Areas.Employee.Models.EmployeeModel>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@using X.PagedList
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -36,19 +38,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeeEmail)
+                EmployeeEmail
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeePassword)
+                EmployeePassword
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Region)
+                Region
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Role)
+                Role
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsEmployeeActive)
+                IsEmployeeActive
             </th>
             <th>Actions</th>
             <th></th>
@@ -82,3 +84,4 @@
         }
     </tbody>
 </table>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "EmployeeModels", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UTCGame.Areas.Game.Models;
 using UTCGame.Data;
+using X.PagedList;
 
 namespace UTCGame.Areas.Game.Controllers
 {
@@ -24,7 +27,7 @@ namespace UTCGame.Areas.Game.Controllers
         }
 
         // GET: Admin/Game
-        public async Task<IActionResult> Index(string _search, string _sort, string _platform, string _type)
+        public async Task<IActionResult> Index(string _search, string _sort, string _platform, string _type, int page = 1)
         {
             var applicationDBContextAdmin = _context.Game.Include(g => g.Employee).Include(g => g.FolderMedia);
 
@@ -33,42 +36,44 @@ namespace UTCGame.Areas.Game.Controllers
             ViewBag.GameType = game_type;
             ViewBag.GamePlatform = game_platform;
 
+            page = page < 1 ? 1 : page;
+            int pageSize = 10;
             if (!_search.IsNullOrEmpty())
             {
-                var ls = applicationDBContextAdmin.Where(x => x.GameName.Contains(_search)).ToListAsync();
-                return View(await ls);
+                var ls = applicationDBContextAdmin.Where(x => x.GameName.Contains(_search)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_platform.IsNullOrEmpty())
             {
-                var ls = applicationDBContextAdmin.Where(x => x.GamePlatform != null && x.GamePlatform.Contains(_platform)).ToListAsync();
-                return View(await ls);
+                var ls = applicationDBContextAdmin.Where(x => x.GamePlatform != null && x.GamePlatform.Contains(_platform)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_type.IsNullOrEmpty())
             {
-                var ls = applicationDBContextAdmin.Where(x => x.GameType != null && x.GameType.Contains(_type)).ToListAsync();
-                return View(await ls);
+                var ls = applicationDBContextAdmin.Where(x => x.GameType != null && x.GameType.Contains(_type)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_sort.IsNullOrEmpty())
             {
                 switch (_sort)
                 {
                     case "az":
-                        var az = applicationDBContextAdmin.OrderBy(x => x.GameName).ToListAsync();
-                        return View(await az);
+                        var az = applicationDBContextAdmin.OrderBy(x => x.GameName).ToPagedList(page, pageSize);
+                        return View(az);
                     case "za":
-                        var za = applicationDBContextAdmin.OrderByDescending(x => x.GameName).ToListAsync();
-                        return View(await za);
+                        var za = applicationDBContextAdmin.OrderByDescending(x => x.GameName).ToPagedList(page, pageSize);
+                        return View(za);
                     case "active":
-                        var active = applicationDBContextAdmin.OrderBy(x => !x.IsGameActive).ToListAsync();
-                        return View(await active);
+                        var active = applicationDBContextAdmin.OrderBy(x => !x.IsGameActive).ToPagedList(page, pageSize);
+                        return View(active);
                     case "!active":
-                        var not_active = applicationDBContextAdmin.OrderBy(x => x.IsGameActive).ToListAsync();
-                        return View(await not_active);
+                        var not_active = applicationDBContextAdmin.OrderBy(x => x.IsGameActive).ToPagedList(page, pageSize);
+                        return View(not_active);
                     default:
                         break;
                 }
             }
-            return View(await applicationDBContextAdmin.ToListAsync());
+            return View(applicationDBContextAdmin.ToPagedList(page, pageSize));
         }
 
         // GET: Game/GameModels/Details/5

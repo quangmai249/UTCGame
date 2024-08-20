@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UTCGame.Areas.Recruit.Models;
 using UTCGame.Data;
+using X.PagedList;
 
 namespace UTCGame.Areas.Recruit.Controllers
 {
@@ -24,35 +25,37 @@ namespace UTCGame.Areas.Recruit.Controllers
         }
 
         // GET: Recruit/Recruit
-        public async Task<IActionResult> Index(string _search, string _sort)
+        public async Task<IActionResult> Index(string _search, string _sort, int page = 1)
         {
             var applicationDBContext = _context.RecruitModel.Include(r => r.Region);
+            page = page < 1 ? 1 : page;
+            int pageSize = 10;
             if (!_search.IsNullOrEmpty())
             {
-                var ls = applicationDBContext.Where(x => x.RecruitName.Contains(_search)).ToListAsync();
-                return View(await ls);
+                var ls = applicationDBContext.Where(x => x.RecruitName.Contains(_search)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_sort.IsNullOrEmpty())
             {
                 switch (_sort)
                 {
                     case "az":
-                        var az = applicationDBContext.OrderBy(x => x.RecruitName).ToListAsync();
-                        return View(await az);
+                        var az = applicationDBContext.OrderBy(x => x.RecruitName).ToPagedList(page, pageSize);
+                        return View(az);
                     case "za":
-                        var za = applicationDBContext.OrderByDescending(x => x.RecruitName).ToListAsync();
-                        return View(await za);
+                        var za = applicationDBContext.OrderByDescending(x => x.RecruitName).ToPagedList(page, pageSize);
+                        return View(za);
                     case "active":
-                        var active = applicationDBContext.OrderBy(x => !x.IsActive).ToListAsync();
-                        return View(await active);
+                        var active = applicationDBContext.OrderBy(x => !x.IsActive).ToPagedList(page, pageSize);
+                        return View(active);
                     case "!active":
-                        var not_active = applicationDBContext.OrderBy(x => x.IsActive).ToListAsync();
-                        return View(await not_active);
+                        var not_active = applicationDBContext.OrderBy(x => x.IsActive).ToPagedList(page, pageSize);
+                        return View(not_active);
                     default:
                         break;
                 }
             }
-            return View(await applicationDBContext.OrderBy(x => x.Region.RegionName).ToListAsync());
+            return View(applicationDBContext.OrderBy(x => x.Region.RegionName).ToPagedList(page, pageSize));
         }
 
         // GET: Recruit/Recruit/Details/5

@@ -1,5 +1,7 @@
-﻿@model IEnumerable<UTCGame.Areas.Product.Models.ProductModel>
-
+﻿@model X.PagedList.IPagedList<UTCGame.Areas.Product.Models.ProductModel>
+@using X.PagedList
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Products";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -59,6 +61,7 @@
                 <br />
             }
         </div>
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Products", "Home", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
     }
 </div>
 

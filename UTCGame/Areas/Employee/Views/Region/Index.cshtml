@@ -1,6 +1,8 @@
-﻿@model IEnumerable<UTCGame.Areas.Employee.Models.Region>
+﻿@model X.PagedList.IPagedList<UTCGame.Areas.Employee.Models.Region>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@using X.PagedList
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -35,10 +37,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RegionName)
+                RegionName
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsRegionActive)
+                IsRegionActive
             </th>
             <th>Actions</th>
             <th></th>
@@ -63,3 +65,4 @@
         }
     </tbody>
 </table>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "Region", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)

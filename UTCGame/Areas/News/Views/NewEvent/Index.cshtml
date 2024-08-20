@@ -1,6 +1,8 @@
-﻿@model IEnumerable<UTCGame.Areas.News.Models.NewEvent>
+﻿@model X.PagedList.IPagedList<UTCGame.Areas.News.Models.NewEvent>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@using X.PagedList
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -53,22 +55,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NewEventTitle)
+                NewEventTitle
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewEventDetail)
+                NewEventDetail
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewEventDateTime)
+                NewEventDateTime
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewsCategory)
+                NewsCategory
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FolderMediaModel)
+                FolderMediaModel
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsActive)
+                IsActive
             </th>
             <th>Actions</th>
             <th></th>
@@ -105,3 +107,4 @@
         }
     </tbody>
 </table>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "NewEvent", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)

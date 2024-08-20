@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UTCGame.Areas.Product.Models;
 using UTCGame.Data;
+using X.PagedList;
 
 namespace UTCGame.Areas.Product.Controllers
 {
@@ -24,36 +25,38 @@ namespace UTCGame.Areas.Product.Controllers
         }
 
         // GET: Admin/Product
-        public async Task<IActionResult> Index(string _search, string _sort)
+        public async Task<IActionResult> Index(string _search, string _sort, int page = 1)
         {
+            page = page < 1 ? 1 : page;
+            int pageSize = 10;
             var applicationDBContextAdmin = _context.ProductModel.Include(p => p.Game).Include(p => p.ProductType);
             if (!_search.IsNullOrEmpty())
             {
-                var ls = applicationDBContextAdmin.Where(x => x.ProductName.Contains(_search)).ToListAsync();
-                return View(await ls);
+                var ls = applicationDBContextAdmin.Where(x => x.ProductName.Contains(_search)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_sort.IsNullOrEmpty())
             {
                 switch (_sort)
                 {
                     case "az":
-                        var az = applicationDBContextAdmin.OrderBy(x => x.ProductName).ToListAsync();
-                        return View(await az);
+                        var az = applicationDBContextAdmin.OrderBy(x => x.ProductName).ToPagedList(page, pageSize);
+                        return View(az);
                     case "za":
-                        var za = applicationDBContextAdmin.OrderByDescending(x => x.ProductName).ToListAsync();
-                        return View(await za);
+                        var za = applicationDBContextAdmin.OrderByDescending(x => x.ProductName).ToPagedList(page, pageSize);
+                        return View(za);
                     case "active":
-                        var active = applicationDBContextAdmin.OrderBy(x => !x.IsProductActive).ToListAsync();
-                        return View(await active);
+                        var active = applicationDBContextAdmin.OrderBy(x => !x.IsProductActive).ToPagedList(page, pageSize);
+                        return View(active);
                     case "!active":
-                        var not_active = applicationDBContextAdmin.OrderBy(x => x.IsProductActive).ToListAsync();
-                        return View(await not_active);
+                        var not_active = applicationDBContextAdmin.OrderBy(x => x.IsProductActive).ToPagedList(page, pageSize);
+                        return View(not_active);
                     default:
                         break;
                 }
 
             }
-            return View(await applicationDBContextAdmin.ToListAsync());
+            return View(applicationDBContextAdmin.ToPagedList(page, pageSize));
         }
 
         // GET: Admin/Product/Details/5

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UTCGame.Areas.Employee.Models;
 using UTCGame.Data;
+using X.PagedList;
 
 namespace UTCGame.Areas.Employee.Controllers
 {
@@ -24,35 +25,37 @@ namespace UTCGame.Areas.Employee.Controllers
         }
 
         // GET: Employee/Role
-        public async Task<IActionResult> Index(string _search, string _sort)
+        public async Task<IActionResult> Index(string _search, string _sort, int page = 1)
         {
+            page = page < 1 ? 1 : page;
+            int pageSize = 10;
             if (!_search.IsNullOrEmpty())
             {
-                var ls = _context.Role.Where(x => x.RoleName.Contains(_search)).ToListAsync();
-                return View(await ls);
+                var ls = _context.Role.Where(x => x.RoleName.Contains(_search)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_sort.IsNullOrEmpty())
             {
                 switch (_sort)
                 {
                     case "az":
-                        var az = _context.Role.OrderBy(x => x.RoleName).ToListAsync();
-                        return View(await az);
+                        var az = _context.Role.OrderBy(x => x.RoleName).ToPagedList(page, pageSize);
+                        return View(az);
                     case "za":
-                        var za = _context.Role.OrderByDescending(x => x.RoleName).ToListAsync();
-                        return View(await za);
+                        var za = _context.Role.OrderByDescending(x => x.RoleName).ToPagedList(page, pageSize);
+                        return View(za);
                     case "active":
-                        var active = _context.Role.OrderBy(x => !x.IsRoleActive).ToListAsync();
-                        return View(await active);
+                        var active = _context.Role.OrderBy(x => !x.IsRoleActive).ToPagedList(page, pageSize);
+                        return View(active);
                     case "!active":
-                        var not_active = _context.Role.OrderBy(x => x.IsRoleActive).ToListAsync();
-                        return View(await not_active);
+                        var not_active = _context.Role.OrderBy(x => x.IsRoleActive).ToPagedList(page, pageSize);
+                        return View(not_active);
                     default:
                         break;
                 }
 
             }
-            return View(await _context.Role.ToListAsync());
+            return View(_context.Role.ToPagedList(page, pageSize));
         }
 
         // GET: Employee/Role/Details/5

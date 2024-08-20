@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UTCGame.Areas.News.Models;
 using UTCGame.Data;
+using X.PagedList;
 
 namespace UTCGame.Areas.News.Controllers
 {
@@ -24,49 +27,52 @@ namespace UTCGame.Areas.News.Controllers
         }
 
         // GET: News/NewEvent
-        public async Task<IActionResult> Index(DateTime _date, string _search, string _sort, string _category)
+        public async Task<IActionResult> Index(DateTime _date, string _search, string _sort, string _category, int page = 1)
         {
             var applicationDBContext = _context.NewEvent.Include(n => n.FolderMediaModel).Include(n => n.NewsCategory);
 
             var Category = _context.NewsCategory.Where(x => x.IsActive).ToList();
             ViewBag.Category = Category;
 
+            page = page < 1 ? 1 : page;
+            int pageSize = 3;
             if (_date != DateTime.MinValue)
             {
-                var ls = await applicationDBContext.Where(x => x.NewEventDateTime.Contains(_date.ToShortDateString())).OrderByDescending(x => x.NewEventDateTime).ToListAsync();
+                var ls = applicationDBContext.Where(x => x.NewEventDateTime.Contains(_date.ToShortDateString())).OrderByDescending(x => x.NewEventDateTime).ToPagedList(page, pageSize);
                 return View(ls);
             }
             if (!_category.IsNullOrEmpty())
             {
-                var ls = applicationDBContext.Where(x => x.NewsCategory.NewsCategoryName.Contains(_category)).ToListAsync();
-                return View(await ls);
+                var ls = applicationDBContext.Where(x => x.NewsCategory.NewsCategoryName.Contains(_category)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_search.IsNullOrEmpty())
             {
-                var ls = applicationDBContext.Where(x => x.NewEventTitle.Contains(_search)).ToListAsync();
-                return View(await ls);
+                var ls = applicationDBContext.Where(x => x.NewEventTitle.Contains(_search)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_sort.IsNullOrEmpty())
             {
                 switch (_sort)
                 {
                     case "az":
-                        var az = applicationDBContext.OrderBy(x => x.NewEventTitle).ToListAsync();
-                        return View(await az);
+                        var az = applicationDBContext.OrderBy(x => x.NewEventTitle).ToPagedList(page, pageSize);
+                        return View(az);
                     case "za":
-                        var za = applicationDBContext.OrderByDescending(x => x.NewEventTitle).ToListAsync();
-                        return View(await za);
+                        var za = applicationDBContext.OrderByDescending(x => x.NewEventTitle).ToPagedList(page, pageSize);
+                        return View(za);
                     case "active":
-                        var active = applicationDBContext.OrderBy(x => !x.IsActive).ToListAsync();
-                        return View(await active);
+                        var active = applicationDBContext.OrderBy(x => !x.IsActive).ToPagedList(page, pageSize);
+                        return View(active);
                     case "!active":
-                        var not_active = applicationDBContext.OrderBy(x => x.IsActive).ToListAsync();
-                        return View(await not_active);
+                        var not_active = applicationDBContext.OrderBy(x => x.IsActive).ToPagedList(page, pageSize);
+                        return View(not_active);
                     default:
                         break;
                 }
             }
-            return View(await applicationDBContext.OrderByDescending(x => x.NewEventDateTime).ToListAsync());
+
+            return View(applicationDBContext.OrderByDescending(x => x.NewEventDateTime).ToPagedList(page, pageSize));
         }
 
         // GET: News/NewEvent/Details/5

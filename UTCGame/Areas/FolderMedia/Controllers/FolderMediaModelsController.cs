@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UTCGame.Areas.FolderMedia.Models;
 using UTCGame.Data;
+using X.PagedList;
 
 namespace UTCGame.Areas.FolderMedia.Controllers
 {
@@ -27,29 +28,31 @@ namespace UTCGame.Areas.FolderMedia.Controllers
         }
 
         // GET: FolderMedia/FolderMediaModels
-        public async Task<IActionResult> Index(string _search, string _sort, List<IFormFile> formFiles, string folder)
+        public async Task<IActionResult> Index(string _search, string _sort, List<IFormFile> formFiles, string folder, int page = 1)
         {
+            page = page < 1 ? 1 : page;
+            int pageSize = 10;
             if (!_search.IsNullOrEmpty())
             {
-                var ls = _context.FolderMediaModel.Where(x => x.FolderMediaName.Contains(_search)).ToListAsync();
-                return View(await ls);
+                var ls = _context.FolderMediaModel.Where(x => x.FolderMediaName.Contains(_search)).ToPagedList(page, pageSize);
+                return View(ls);
             }
             if (!_sort.IsNullOrEmpty())
             {
                 switch (_sort)
                 {
                     case "az":
-                        var az = _context.FolderMediaModel.OrderBy(x => x.FolderMediaName).ToListAsync();
-                        return View(await az);
+                        var az = _context.FolderMediaModel.OrderBy(x => x.FolderMediaName).ToPagedList(page, pageSize);
+                        return View(az);
                     case "za":
-                        var za = _context.FolderMediaModel.OrderByDescending(x => x.FolderMediaName).ToListAsync();
-                        return View(await za);
+                        var za = _context.FolderMediaModel.OrderByDescending(x => x.FolderMediaName).ToPagedList(page, pageSize);
+                        return View(za);
                     case "active":
-                        var active = _context.FolderMediaModel.OrderBy(x => !x.IsActive).ToListAsync();
-                        return View(await active);
+                        var active = _context.FolderMediaModel.OrderBy(x => !x.IsActive).ToPagedList(page, pageSize);
+                        return View(active);
                     case "!active":
-                        var not_active = _context.FolderMediaModel.OrderBy(x => x.IsActive).ToListAsync();
-                        return View(await not_active);
+                        var not_active = _context.FolderMediaModel.OrderBy(x => x.IsActive).ToPagedList(page, pageSize);
+                        return View(not_active);
                     default:
                         break;
                 }
@@ -73,7 +76,7 @@ namespace UTCGame.Areas.FolderMedia.Controllers
                     ViewBag.CheckFile = $"{_c} files created successfully!";
                 }
             }
-            return View(await _context.FolderMediaModel.ToListAsync());
+            return View(_context.FolderMediaModel.ToPagedList(page, pageSize));
         }
 
         [HttpPost]

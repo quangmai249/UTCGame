@@ -1,6 +1,8 @@
-﻿@model IEnumerable<UTCGame.Areas.Product.Models.ProductModel>
+﻿@model X.PagedList.IPagedList<UTCGame.Areas.Product.Models.ProductModel>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@using X.PagedList
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -36,25 +38,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+                ProductName
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductPrice)
+                ProductPrice
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductQuantity)
+                ProductQuantity
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductReleaseDate)
+                ProductReleaseDate
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductType)
+                ProductType
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Game)
+                Game
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsProductActive)
+                IsProductActive
             </th>
             <th>Actions</th>
             <th></th>
@@ -94,3 +96,5 @@
         }
     </tbody>
 </table>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "ProductModel", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)

@@ -1,16 +1,19 @@
-﻿@model IEnumerable<UTCGame.Areas.News.Models.NewEvent>
+﻿@model X.PagedList.IPagedList<UTCGame.Areas.News.Models.NewEvent>
+@using X.PagedList
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "NewsEvents";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
-    a:hover{
-        text-decoration:none;
+    a:hover {
+        text-decoration: none;
     }
 
-    .container{
-        margin-bottom:200px;
+    .container {
+        margin-bottom: 200px;
     }
 </style>
 
@@ -34,12 +37,12 @@
             <div class="card-img row shadow">
                 <a href="~/@path_pdf">
                     <img class="w-25 col-md-4" src="~/@path_img" />
-                    <h4>@item.NewEventTitle</h4>
+                    <h4>@item.NewEventTitle | @item.NewEventDateTime</h4>
                     <p class="text-dark">@item.NewEventDetail</p>
-                    <p class="text-dark">@item.NewEventDateTime</p>
                 </a>
             </div>
             <br />
         }
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("NewsEvents", "Home", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
     }
 </div>
